@@ -7,6 +7,7 @@ import Button from "@/app/components/Button";
 
 import { supabase } from "@/lib/supabaseClient";
 const Home = () => {
+  // eslint-disable-next-line
   const [wordData, setWordData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -22,7 +23,11 @@ const Home = () => {
       const data = await response.json();
       setWordData(data[0]);
     } catch (err) {
-      setError(err.message);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
     }
   };
 
@@ -30,9 +35,12 @@ const Home = () => {
     if (!wordData) return;
     setIsSaving(true);
     const { word, phonetic, meanings } = wordData;
+    // eslint-disable-next-line
     const formattedMeanings = meanings.map((meaning: any) => ({
       partOfSpeech: meaning.partOfSpeech,
+      // eslint-disable-next-line
       definitions: meaning.definitions.map((d: any) => d.definition),
+      // eslint-disable-next-line
       examples: meaning.definitions.map((d: any) => d.example || ""),
       synonyms: meaning.synonyms || [],
       antonyms: meaning.antonyms || []

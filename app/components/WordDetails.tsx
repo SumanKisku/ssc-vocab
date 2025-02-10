@@ -23,7 +23,7 @@ const WordDetails: React.FC<WordDetailsProps> = ({ word, phonetic, meanings }) =
             {meaning.definitions.map((def, i) => (
               <li key={i}>
                 <p>{def.definition}</p>
-                {def.example && <p className="text-gray-500 italic">"{def.example}"</p>}
+                {def.example && <p className="text-gray-500 italic">&quot;{def.example}&quot;</p>}
               </li>
             ))}
           </ul>
