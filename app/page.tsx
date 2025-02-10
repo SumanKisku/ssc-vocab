@@ -34,20 +34,10 @@ const Home = () => {
   const saveWordToSupabase = async () => {
     if (!wordData) return;
     setIsSaving(true);
-    const { word, phonetic, meanings } = wordData;
-    // eslint-disable-next-line
-    const formattedMeanings = meanings.map((meaning: any) => ({
-      partOfSpeech: meaning.partOfSpeech,
-      // eslint-disable-next-line
-      definitions: meaning.definitions.map((d: any) => d.definition),
-      // eslint-disable-next-line
-      examples: meaning.definitions.map((d: any) => d.example || ""),
-      synonyms: meaning.synonyms || [],
-      antonyms: meaning.antonyms || []
-    }));
+    const { word } = wordData;
 
     const { error } = await supabase.from("words").insert([
-      { word, phonetic, meanings: formattedMeanings }
+      { word }
     ]);
 
     setIsSaving(false);
